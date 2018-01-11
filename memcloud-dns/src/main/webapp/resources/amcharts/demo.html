@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>数据可以缺少的曲线DEMO (csv格式数据)</title>
+	</head>
+	<body style="background-color:#EEEEEE">
+	  	<script type="text/javascript" src="./flash/swfobject.js"></script>
+    	<script type="text/javascript" src="./js/amcharts.js"></script>
+		<script type="text/javascript" src="./js/amfallback.js"></script>
+		<script type="text/javascript" src="./js/raphael.js"></script>
+		
+		<div style="float:left">
+			<h2><a id="href_1" target="_black"></a></h2>
+			<div id="chart_1_day_ago" style="width:600px; height:400px; background-color:#FFFFFF"></div>
+		</div>
+		<div style="float: right">
+			<h2><a id="href_2"  target="_black"></a></h2>
+			<div id="chart_2_day_ago" style="width:600px; height:400px; background-color:#FFFFFF"></div>
+		</div>
+		
+		<script type="text/javascript">
+			var dayAgo1 = "1";
+			var dayAgo2 = "2";
+			
+			document.getElementById("href_1").setAttribute("href","./register." +dayAgo1 + ".txt");
+			document.getElementById("href_1").innerHTML = "REPORT: "+dayAgo1;
+
+			document.getElementById("href_2").setAttribute("href","./register." + dayAgo2 + ".txt");
+			document.getElementById("href_2").innerHTML = "REPORT: "+dayAgo2;
+	
+			
+			var params = {
+		        bgcolor:"#FFFFFF"
+		    };
+			
+			var flashVars1 = {
+			     path: "./flash/",
+				 settings_file: "./settings_register.xml",
+				 data_file: "./demo." + dayAgo1 + ".txt"
+			};
+			
+			
+			var flashVars2 = {
+			    path: "./flash/",
+				settings_file: "./settings_register.xml",
+				data_file: "./demo." + dayAgo2 + ".txt"
+			};
+			
+
+			// change 8 to 80 to test javascript version
+		    if (swfobject.hasFlashPlayerVersion("8")){
+			    swfobject.embedSWF("./flash/amline.swf", "chart_1_day_ago", "600", "400", "8.0.0", "./flash/expressInstall.swf", flashVars1, params);
+			    swfobject.embedSWF("./flash/amline.swf", "chart_2_day_ago", "600", "400", "8.0.0", "./flash/expressInstall.swf", flashVars2, params);
+			}
+			else{//js not supported by IE
+				var amFallback_1 = new AmCharts.AmFallback();
+				amFallback_1.settingsFile = flashVars1.settings_file;			
+			    amFallback_1.dataFile = flashVars1.data_file;
+				amFallback_1.pathToImages = "./images/";
+				amFallback_1.type = "line";
+				amFallback_1.write("chart_1_day_ago");
+
+				var amFallback_2 = new AmCharts.AmFallback();
+				amFallback_2.settingsFile = flashVars2.settings_file;			
+			  	amFallback_2.dataFile = flashVars2.data_file;
+				amFallback_2.pathToImages = "./images/";
+				amFallback_2.type = "line";
+				amFallback_2.write("chart_2_day_ago");
+			}
+			
+		</script>
+	</body>
+</html>

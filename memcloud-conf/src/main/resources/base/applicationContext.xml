@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	
+	<import resource="applicationContext-action-memdns.xml" />
+	<import resource="applicationContext-business-memdns.xml" />
+	<import resource="applicationContext-data-dao.xml" />
+	<import resource="applicationContext-data-mongodb.xml" />
+	
+	
+	<!-- 
+	<import resource="applicationContext-action-stats.xml" />
+	<import resource="applicationContext-business-stats.xml" />
+	 
+	 -->
+	 
+	
+	<import resource="applicationContext-rest.xml" />
+	<import resource="applicationContext-comms.xml" />
+	
+</beans>

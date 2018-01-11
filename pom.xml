@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>io.memcloud</groupId>
+	<artifactId>memcloud</artifactId>
+	<packaging>pom</packaging>
+	<version>0.2.0</version>
+	<name>memcloud</name>
+	<description>a distributed cluster for memcached</description>
+	<url>http://memcloud.io</url>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>scm:git:git@github.com:downgoon/memcloud.git</connection>
+		<developerConnection>scm:git:git@github.com:downgoon/memcloud.git</developerConnection>
+		<url>http://github.com/downgoon/memcloud</url>
+		<tag>0.2.0</tag>
+	</scm>
+
+	<developers>
+		<developer>
+			<id>downgoon</id>
+			<name>downgoon</name>
+			<email>downgoon@qq.com</email>
+		</developer>
+	</developers>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>3.0.5.RELEASE</spring.version>
+		<slf4j.version>1.7.7</slf4j.version>
+		<jresty.version>0.0.1</jresty.version>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>rd</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile>rd</build.profile>
+			</properties>
+		</profile>
+		<profile>
+			<id>qa</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile>qa</build.profile>
+			</properties>
+		</profile>
+		<profile>
+			<id>op</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile>op</build.profile>
+			</properties>
+		</profile>
+
+		<!-- qa alias -->
+		<profile>
+			<id>sit</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile>qa</build.profile>
+			</properties>
+		</profile>
+
+		<!-- profiles about deploy -->
+		<profile>
+			<id>your-corp</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>your-corp-rh</id>
+					<name>Nexus Snapshot Repository</name>
+					<url>http://your-corp-rh.com/nexus/content/repositories/snapshots/</url>
+				</snapshotRepository>
+				<repository>
+					<id>your-corp-rh</id>
+					<name>Nexus Release Repository</name>
+					<url>http://your-corp-rh.com/nexus/content/repositories/releases/</url>
+				</repository>
+			</distributionManagement>
+		</profile>
+
+		<profile>
+			<id>oss</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>ossrh</id>
+					<name>Central Public Snapshots</name>
+					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+				</snapshotRepository>
+				<repository>
+					<id>ossrh</id>
+					<name>Central Public Releases</name>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+				</repository>
+			</distributionManagement>
+
+			<build>
+				<plugins>
+					<!-- deploy -->
+					<!-- source attachment on release -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>2.2.1</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- javadoc attachment on release -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.9.1</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- sign of jar -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.5</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+
+		</profile>
+
+
+
+	</profiles>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
+				</configuration>
+			</plugin>
+
+
+
+			<!-- Download sources and javadocs for eclipse -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+				</configuration>
+			</plugin>
+
+
+			<!-- global exclusions -->
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>1.4.1</version>
+				<executions>
+					<execution>
+						<id>default-enforce</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<bannedDependencies>
+									<excludes>
+										<exclude>org.slf4j:*</exclude>
+										<exclude>ch.qos.logback:*</exclude>
+										<exclude>org.springframework:*</exclude>
+									</excludes>
+									<includes>
+										<include>org.slf4j:slf4j-api</include>
+										<include>org.slf4j:slf4j-log4j12</include>
+										<include>org.springframework:*:${spring.version}</include>
+									</includes>
+								</bannedDependencies>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources/${build.profile}</directory>
+			</resource>
+			<resource>
+				<directory>src/main/resources/base</directory>
+			</resource>
+		</resources>
+
+	</build>
+
+	<modules>
+		<module>memcloud-client</module>
+		<module>memcloud-agent</module>
+
+		<module>memcloud-dns</module>
+		<module>memcloud-alert</module>
+
+		<module>memcloud-cas</module>
+		<module>memcloud-data-dao</module>
+		<module>memcloud-data-mongodb</module>
+
+		<module>memcloud-data-model</module>
+		<module>memcloud-conf</module>
+	</modules>
+</project>

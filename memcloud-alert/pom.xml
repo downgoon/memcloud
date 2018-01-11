@@ -1,0 +1,209 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>io.memcloud</groupId>
+		<artifactId>memcloud</artifactId>
+		<version>0.2.0</version>
+	</parent>
+	<artifactId>memcloud-alert</artifactId>
+	<name>memcloud-alert</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<app.simple.name>memalert</app.simple.name>
+		<build.number>${maven.build.timestamp}</build.number>
+		<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>io.memcloud</groupId>
+			<artifactId>memcloud-data-dao</artifactId>
+			<version>0.2.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>memcloud-data-model</artifactId>
+					<groupId>io.memcloud</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>io.memcloud</groupId>
+			<artifactId>memcloud-data-mongodb</artifactId>
+			<version>0.2.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>memcloud-data-model</artifactId>
+					<groupId>io.memcloud</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+
+		<dependency>
+			<groupId>io.memcloud</groupId>
+			<artifactId>memcloud-data-model</artifactId>
+			<version>0.2.0</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-email</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>appassembler-maven-plugin</artifactId>
+				<version>1.7</version>
+				<configuration>
+					<configurationDirectory>conf</configurationDirectory>
+					<includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
+					<repositoryLayout>flat</repositoryLayout>
+					<useWildcardClassPath>true</useWildcardClassPath>
+					<daemons>
+						<daemon>
+							<id>memalert</id>
+							<mainClass>io.memcloud.stats.business.CaptureScheduler</mainClass>
+							<commandLineArguments>
+								<commandLineArgument>start</commandLineArgument>
+							</commandLineArguments>
+							<platforms>
+								<platform>jsw</platform>
+							</platforms>
+							<jvmSettings>
+
+								<maxStackSize>128</maxStackSize>
+								<systemProperties>
+									<systemProperty>MEMCLOUD_HOME=.</systemProperty>
+								</systemProperties>
+								
+								<extraArguments>
+									<extraArgument>-server</extraArgument>
+									<extraArgument>-XX:MaxPermSize=64M</extraArgument>
+									<extraArgument>-Xms1G</extraArgument>
+									<extraArgument>-Xmx2G</extraArgument>
+								</extraArguments>
+								
+							</jvmSettings>
+							<generatorConfigurations>
+								<generatorConfiguration>
+									<generator>jsw</generator>
+									<includes>
+										<include>aix-ppc-32</include>
+										<include>aix-ppc-64</include>
+										<include>hpux-parisc-64</include>
+										<include>linux-x86-32</include>
+										<include>linux-x86-64</include>
+										<include>linux-ppc-64</include>
+										<include>macosx-ppc-32</include>
+										<include>macosx-x86-universal-32</include>
+										<include>macosx-universal-32</include>
+										<include>macosx-universal-64</include>
+										<include>solaris-sparc-32</include>
+										<include>solaris-sparc-64</include>
+										<include>solaris-x86-32</include>
+										<include>windows-x86-32</include>
+										<include>windows-x86-64</include>
+									</includes>
+
+									<configuration>
+										<property>
+											<name>configuration.directory.in.classpath.first</name>
+											<value>conf</value>
+										</property>
+										<property>
+											<name>set.default.REPO_DIR</name>
+											<value>lib</value>
+										</property>
+										<property>
+											<name>wrapper.logfile</name>
+											<value>logs/memalert.log</value>
+										</property>
+									</configuration>
+
+								</generatorConfiguration>
+							</generatorConfigurations>
+						</daemon>
+
+					</daemons>
+				</configuration>
+				<executions>
+					<execution>
+						<id>generate-jsw</id>
+						<phase>package</phase>
+						<goals>
+							<goal>generate-daemons</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/assembly.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>

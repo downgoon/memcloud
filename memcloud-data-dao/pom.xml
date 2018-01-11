@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>io.memcloud</groupId>
+		<artifactId>memcloud</artifactId>
+		<version>0.2.0</version>
+	</parent>
+	<artifactId>memcloud-data-dao</artifactId>
+	<name>memcloud-dao</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<hibernate.version>3.6.10.Final</hibernate.version>
+		<c3p0.version>0.9.1.2</c3p0.version>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>io.memcloud</groupId>
+			<artifactId>memcloud-data-model</artifactId>
+			<version>0.2.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.downgoon</groupId>
+			<artifactId>jresty-data-cache</artifactId>
+			<version>${jresty.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.12.1.GA</version>
+		</dependency>
+
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>${c3p0.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.30</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.downgoon</groupId>
+			<artifactId>jresty-commons</artifactId>
+			<version>${jresty.version}</version>
+		</dependency>
+
+	</dependencies>
+
+
+</project>

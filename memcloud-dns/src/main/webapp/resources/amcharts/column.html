@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+		<title>日下载量（柱状图）</title>
+	</head>
+
+	<body style="background-color:#EEEEEE">
+	
+		<script type="text/javascript" src="./flash/swfobject.js"></script>
+
+		<!-- following scripts required for JavaScript version. The order is important! -->
+		<script type="text/javascript" src="./js/amcharts.js"></script>
+		<script type="text/javascript" src="./js/amfallback.js"></script>
+		<script type="text/javascript" src="./js/raphael.js"></script>
+
+    <!-- chart is placed in this div. if you have more than one chart on a page, give unique id for each div -->
+		<div id="chartdiv" style="width:600px; height:400px; background-color:#FFFFFF"></div>
+
+	    <script type="text/javascript">
+	    
+            var params = {
+                bgcolor:"#FFFFFF"
+                };
+
+		    var flashVars = {
+		        path: "../../amcharts/flash/",
+
+				/* in most cases settings and data are loaded from files, but, as this require
+				 all the files to be upladed to web server, we use inline data and settings here.*/
+				 
+		    settings_file: "./settings_column.xml",
+		    data_file: "./data_column.txt"
+		        
+				//chart_data: "21 Jan;91;96;69\n22 Jan;87;112;101\n23 Jan;68;79;66\n24 Jan;30;32;23\n25 Jan;52;57;41",
+				//chart_settings: "<settings><data_type>csv</data_type><plot_area><margins><left>50</left><right>40</right><top>50</top><bottom>50</bottom></margins></plot_area><grid><category><dashed>1</dashed><dash_length>4</dash_length></category><value><dashed>1</dashed><dash_length>4</dash_length></value></grid><axes><category><width>1</width><color>E7E7E7</color></category><value><width>1</width><color>E7E7E7</color></value></axes><values><value><min>0</min></value></values><legend><enabled>0</enabled></legend><angle>0</angle><column><width>85</width><balloon_text>{title}: {value} downloads</balloon_text><grow_time>3</grow_time><sequenced_grow>1</sequenced_grow></column><graphs><graph gid='0'><title>Stock</title><color>ADD981</color></graph><graph gid='1'><title>Column</title><color>7F8DA9</color></graph><graph gid='2'><title>Line</title><color>FEC514</color></graph></graphs><labels><label lid='0'><text><![CDATA[<b>Daily downloads</b>]]></text><y>18</y><text_color>000000</text_color><text_size>13</text_size><align>center</align></label></labels></settings>"
+			};
+
+			// change 8 to 80 to test javascript version
+      if (swfobject.hasFlashPlayerVersion("8")){
+	    		swfobject.embedSWF("./flash/amcolumn.swf", "chartdiv", "600", "400", "8.0.0", "./flash/expressInstall.swf", flashVars, params);
+	    }
+			else{
+				var amFallback = new AmCharts.AmFallback();
+				// amFallback.settingsFile = flashVars.settings_file;  		// doesn't support multiple settings files or additional_chart_settins as flash does
+				// amFallback.dataFile = flashVars.data_file;
+				amFallback.chartSettings = flashVars.chart_settings;
+				amFallback.pathToImages = "./images/";
+				amFallback.chartData = flashVars.chart_data;
+				amFallback.type = "column";
+				amFallback.write("chartdiv");
+			}
+
+		</script>
+
+
+
+	
+
+	</body>
+</html>

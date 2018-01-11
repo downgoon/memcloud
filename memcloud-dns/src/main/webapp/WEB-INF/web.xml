@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+			classpath:/applicationContext.xml
+		</param-value>
+  </context-param>
+  
+  <filter>
+    <filter-name>restFilterDispatcher</filter-name>
+    <filter-class>com.github.downgoon.jresty.rest.struts2.dispatcher.RestFilterDispatcher</filter-class>
+    <init-param>
+      <param-name>defaultEncoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>defaultLocale</param-name>
+      <param-value>zh-CN</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>restFilterDispatcher</filter-name>
+    <url-pattern>/memcloud/*</url-pattern>
+	<url-pattern>/admin/*</url-pattern>
+  </filter-mapping>
+  
+  
+  
+  <listener>
+    <listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+  </listener>
+  
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/rest/404.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/WEB-INF/rest/j2ee500.jsp</location>
+  </error-page>
+  
+</web-app>

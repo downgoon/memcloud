@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean name="baseAction" class="io.memcloud.memdns.action.BaseAction"
+		abstract="true">
+		<property name="restResultsHandler" ref="restResultsHandler" />
+	</bean>
+
+	<bean name="baseInterceptor"
+		class="io.memcloud.memdns.interceptor.BaseInterceptor"
+		abstract="true">
+		<property name="restResultsHandler" ref="restResultsHandler" />
+	</bean>
+
+	<bean name="restExceptionHandlerAction" scope="prototype"
+		class="com.github.downgoon.jresty.rest.struts2.action.RestExceptionHandlerAction">
+		<property name="defaultExtension" value="json" />
+		<property name="restResultsHandler" ref="restResultsHandler" />
+	</bean>
+
+	<bean name="pingAction" scope="prototype"
+		class="io.memcloud.memdns.action.PingAction" parent="baseAction">
+	</bean>
+	
+
+	<bean name="userAction" scope="prototype"
+		class="io.memcloud.memdns.action.UserAction" parent="baseAction">
+	</bean>
+	<bean name="sessionAction" scope="prototype"
+		class="io.memcloud.memdns.action.SessionAction" parent="baseAction">
+	</bean>
+
+	<bean name="appAction" scope="prototype"
+		class="io.memcloud.memdns.action.AppAction" parent="baseAction">
+	</bean>
+	<bean name="shardAction" scope="prototype"
+		class="io.memcloud.memdns.action.ShardAction" parent="baseAction">
+	</bean>
+	<bean name="groupAction" scope="prototype"
+		class="io.memcloud.memdns.action.GroupAction" parent="baseAction">
+	</bean>
+
+	<bean name="dnsAction" scope="prototype"
+		class="io.memcloud.memdns.action.DNSAction" parent="baseAction">
+	</bean>
+	<bean name="memAction" scope="prototype"
+		class="io.memcloud.memdns.action.MemAction" parent="baseAction">
+	</bean>
+	<bean name="scaleAction" scope="prototype"
+		class="io.memcloud.memdns.action.ScaleAction" parent="baseAction">
+	</bean>
+
+
+
+	<bean name="baseAuthInterceptor" scope="prototype"
+		class="io.memcloud.memdns.interceptor.BaseAuthInterceptor"
+		parent="baseInterceptor">
+		<property name="baseauthlist" value="${acl.adminlist}" />
+	</bean>
+
+	<bean name="loginAuthInterceptor" scope="prototype"
+		class="io.memcloud.memdns.interceptor.LoginedAuthInterceptor"
+		parent="baseInterceptor">
+		<property name="httpTracker" ref="httpTracker" />
+	</bean>
+
+	<bean name="httpTracker" class="io.memcloud.cas.session.CookieHttpTracker" />
+
+	<bean name="statAction" scope="prototype"
+		class="io.memcloud.stats.action.StatAction" parent="baseAction">
+	</bean>
+	
+
+</beans>

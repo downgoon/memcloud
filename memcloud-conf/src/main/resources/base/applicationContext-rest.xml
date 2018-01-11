@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	 
+	<bean name="restResultsHandler" class="com.github.downgoon.jresty.rest.struts2.action.RestResultsHandler">
+		<property name="contentTypeHandlerManager">
+			<bean class="com.github.downgoon.jresty.rest.view.DefaultContentTypeHandlerManager">
+				<property name="handlersByExtension">
+					<map>
+						<entry key="json" value-ref="jsonHandler" />
+						<entry key="xml" value-ref="xmlHandler" />
+						<entry key="jsonp" value-ref="jsonpHandler" />
+						<entry key="html" value-ref="htmlHandler" />
+						<entry key="jsp" value-ref="jspHandler" />
+					</map>
+				</property>
+				<property name="defaultExtension" value="json" />
+				<property name="jsCallbackMethodName" value="callback" />
+			</bean>
+		</property>
+		<property name="redirectTypeHandler">
+			<bean class="com.github.downgoon.jresty.rest.view.DefaultRedirectTypeHandler" />
+		</property>
+	</bean>
+	
+	<bean name="jsonHandler" class="com.github.downgoon.jresty.rest.view.JsonLibHandler">
+		<property name="contentType" value="application/json"></property>
+		<property name="contentEncode" value="UTF-8" />
+		<property name="cacheControlSecond" value="0"/>
+	</bean>
+	
+	<bean name="jsonpHandler" class="io.memcloud.memdns.util.MyRestrictJSHandler">
+		<property name="extension" value="jsonp" />
+		<property name="delegate" ref="jsonHandler" />
+		<property name="cacheControlSecond" value="0"/>
+	</bean>
+	
+	<bean name="xmlHandler" class="io.memcloud.memdns.util.MyUnifiedXmlHandler">
+		<property name="cacheControlSecond" value="0"/>
+	</bean>
+	
+	
+	<bean name="htmlHandler" class="com.github.downgoon.jresty.rest.view.HtmlHandler">
+		<property name="cacheControlSecond" value="0"/>
+		<property name="contentType" value="text/html" />
+	</bean>
+	<bean name="jspHandler" class="com.github.downgoon.jresty.rest.view.HtmlHandler">
+		<property name="contentType" value="text/html" />
+		<property name="cacheControlSecond" value="0"/>
+	</bean>
+	
+</beans>

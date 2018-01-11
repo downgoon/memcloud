@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	<package name="memcloud-default" extends="struts-default" namespace="/memcloud">
+		<interceptors>
+			<interceptor name="anti-remote-command-method"
+				class="com.github.downgoon.jresty.rest.struts2.interceptor.AntiRemoteCommandMethodInterceptor" />
+			<interceptor name="crossDomainInterceptor" 
+							class="com.github.downgoon.jresty.rest.struts2.interceptor.CrossDomainInterceptor" />
+			
+			<interceptor name="baseAuthInterceptor" class="baseAuthInterceptor" />
+			<interceptor name="loginAuthInterceptor" class="loginAuthInterceptor" />
+			
+			
+			<interceptor-stack name="anti-remote-command-execution">
+				<interceptor-ref name="defaultStack">
+					<param name="params.excludeParams">dojo\..*,^struts\..*,.*\\.*,.*\(.*,.*\).*,.*@.*,ClientCharset,redirectDynamic</param>
+				</interceptor-ref>
+				<interceptor-ref name="anti-remote-command-method">
+					<param name="includeMethods">equals,getClass,hashCode,notify,notifyAll,toString,wait</param>
+					<param name="excludeMethods"></param>
+				</interceptor-ref>
+				
+				<interceptor-ref name="crossDomainInterceptor" />
+			</interceptor-stack>
+
+		</interceptors>
+		<default-interceptor-ref name="anti-remote-command-execution" />
+		
+		<global-results>
+			<result name="restExceptionResult" type="chain">restExceptionHandler</result>
+			<result name="framExceptionResult">/WEB-INF/rest/fram500.jsp</result>	
+			<result name="exception.jsp">/WEB-INF/rest/fram500.jsp</result>
+            
+            <result name="error.jsp">/WEB-INF/rest/rest500.jsp</result>
+            <result name="error">/WEB-INF/rest/rest500.jsp</result>
+            
+            <result name="prompt.jsp">/WEB-INF/rest/prompt.jsp</result>
+            <result name="prompt">/WEB-INF/rest/prompt.jsp</result>
+            <result name="nohtml.jsp">/WEB-INF/rest/nohtml.jsp</result>
+            <result name="nohtml">/WEB-INF/rest/nohtml.jsp</result>
+            <result name="DENY">/WEB-INF/rest/nohtml.jsp</result>
+            
+            <result name="nologin" type="redirectAction">session</result>
+            
+            <result name="RESTExceptionHandler" type="chain">RESTExceptionHandlerAction</result>
+        </global-results>
+        
+        <global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception" result="restExceptionResult"/>
+			<exception-mapping exception="java.lang.RuntimeException" result="restExceptionResult"/>
+        </global-exception-mappings>
+         
+        <action name="restExceptionHandler" class="restExceptionHandlerAction" method="handleException">
+			<result name="xml">/WEB-INF/rest/rest500.xml</result>
+			<result name="json">/WEB-INF/rest/rest500.json</result>
+			<result name="jsonp">/WEB-INF/rest/rest500.js</result>
+   			<result name="html">/WEB-INF/rest/rest500.jsp</result>
+   			<result name="jsp">/WEB-INF/rest/rest500.jsp</result>
+		</action>
+		
+		<action name="ping" class="pingAction">
+			<result name="success">/WEB-INF/jsp/ping.jsp</result>
+			<result name="debug">/WEB-INF/jsp/ping-debug.jsp</result>
+		</action>
+		
+		<action name="dns" class="dnsAction">
+			<result name="help">/WEB-INF/jsp/dns-help.jsp</result>
+			<result name="create">/WEB-INF/jsp/dns-create.jsp</result>
+		</action>
+		<action name="mem" class="memAction">
+			<result name="index">/WEB-INF/jsp/mem-index.jsp</result>
+		</action>
+		<action name="shard" class="shardAction">
+			<interceptor-ref name="anti-remote-command-execution" />
+			<interceptor-ref name="loginAuthInterceptor">
+				<param name="includeMethods">*</param>
+				<param name="excludeMethods"></param>
+			</interceptor-ref>
+			<result name="index">/WEB-INF/jsp/shard-index.jsp</result>
+		</action>
+		
+		<action name="user" class="userAction">
+			<interceptor-ref name="anti-remote-command-execution" />
+			<interceptor-ref name="loginAuthInterceptor">
+				<param name="includeMethods">*</param>
+				<param name="excludeMethods"></param>
+			</interceptor-ref>
+			<result name="index">/WEB-INF/jsp/user-index.jsp</result>
+			<result name="view">/WEB-INF/jsp/user-view.jsp</result>
+		</action>
+		<action name="session" class="sessionAction">
+			<result name="console.jsp">/WEB-INF/jsp/console.jsp</result>
+			<result name="login.jsp">/WEB-INF/jsp/login.jsp</result>
+			<result name="session-index" type="redirectAction">session</result>
+		</action>
+		
+		<action name="app" class="appAction">
+			<interceptor-ref name="anti-remote-command-execution" />
+			<interceptor-ref name="loginAuthInterceptor">
+				<param name="includeMethods">*</param>
+				<param name="excludeMethods"></param>
+			</interceptor-ref>
+			<result name="index">/WEB-INF/jsp/app-index.jsp</result>
+			<result name="view">/WEB-INF/jsp/app-view.jsp</result>
+			<result name="create">/WEB-INF/jsp/app-create.jsp</result>
+		</action>
+		
+		<action name="group" class="groupAction">
+			<interceptor-ref name="anti-remote-command-execution" />
+			<interceptor-ref name="loginAuthInterceptor">
+				<param name="includeMethods">*</param>
+				<param name="excludeMethods"></param>
+			</interceptor-ref>
+			<result name="view">/WEB-INF/jsp/group-view.jsp</result>
+		</action>
+		
+		<action name="scale" class="scaleAction">
+			<interceptor-ref name="anti-remote-command-execution" />
+			<interceptor-ref name="loginAuthInterceptor">
+				<param name="includeMethods">index,create,view</param>
+				<param name="excludeMethods"></param>
+			</interceptor-ref>
+			
+			<interceptor-ref name="baseAuthInterceptor">
+				<param name="includeMethods">adminidx,adminedit</param>
+				<param name="excludeMethods"></param>
+			</interceptor-ref>
+			
+			<result name="index">/WEB-INF/jsp/scale-index.jsp</result>
+			<result name="create">/WEB-INF/jsp/scale-create.jsp</result>
+			<result name="view">/WEB-INF/jsp/scale-view.jsp</result>
+			
+			<result name="adminidx">/WEB-INF/jsp/scale-adminidx.jsp</result>
+			<result name="adminedit">/WEB-INF/jsp/scale-adminedit.jsp</result>
+		</action>
+		
+		<action name="stat" class="statAction">
+			<interceptor-ref name="anti-remote-command-execution" />
+			<interceptor-ref name="loginAuthInterceptor">
+				<param name="includeMethods"></param>
+				<param name="excludeMethods">*</param>
+			</interceptor-ref>
+			<result name="view">/WEB-INF/jsp/stat-view.jsp</result>
+			<result name="csv">/WEB-INF/jsp/stat-csv.jsp</result>
+		</action>
+		
+	</package>
+	
+</struts>

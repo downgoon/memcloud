@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+  <data_type>csv</data_type>
+  <legend>
+    <enabled>0</enabled>
+  </legend>
+  <colors>#FF0000,#0000FF,#00FF00,#FF9900,#CC00CC,#00CCCC,#33FF00,#990000,#000066,#555555</colors>
+  <pie>
+    <inner_radius>30</inner_radius>
+    <height>7</height>
+    <angle>10</angle>
+    <gradient/>
+  </pie>
+  <animation>
+    <start_time>1</start_time>
+    <pull_out_time>1</pull_out_time>
+  </animation>
+  <data_labels>
+    <show>{title}</show>
+    <max_width>100</max_width>
+  </data_labels>
+</settings>
