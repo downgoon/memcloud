@@ -45,7 +45,7 @@ public class MyRestrictJSHandler extends JSHandler {
 	public static final String LEVEL_ALLOW_SUB = "sub";
 	public static final String LEVEL_DENY = "false";
 
-	/**
+	/*
 	 * 可以重新覆盖这个实现
 	 */
 	protected String getLevel(String domain) {

@@ -23,7 +23,7 @@ public class SessionAction extends BaseAction {
 	private IHttpTracker httpTracker;
 	
 	
-	/**
+	/*
 	 * @param	u	账号名
 	 * @param	p	密码
 	 * @return	登录凭证COOKIE

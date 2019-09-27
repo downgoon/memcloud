@@ -71,7 +71,7 @@ public class StatAction extends BaseAction  {
 		return REST("view");
 	}
 
-	/**
+	/*
 	 * 近两天（今天与昨天）各个时段（5分钟为单位描点）访问量（读写，读，写）对比曲线图
 	 * */
 	public String trend() {
@@ -112,9 +112,8 @@ public class StatAction extends BaseAction  {
 		return REST("csv");
 	}
 	
-	/**
+	/*
 	 * memcached实例当前状态
-	 * @return
 	 */
 	public String curr(){
 		StatDBObject object = null;
@@ -136,25 +135,22 @@ public class StatAction extends BaseAction  {
 		return cmd(0,"GET");
 	}
 	
-	/**
+	/*
 	 * set请求统计
-	 * @return
 	 */
 	public String set(){
 		return cmd(1,"SET");
 	}
 	
-	/**
+	/*
 	 * hit统计
-	 * @return
 	 */
 	public String hit(){
 		return cmd(2,"Hit");
 	}
 	
-	/**
+	/*
 	 * miss统计
-	 * @return
 	 */
 	public String mis(){
 		return cmd(3,"Mis");
@@ -208,7 +204,7 @@ public class StatAction extends BaseAction  {
 		return CsvMedia.csv(getHttpResponse(), attachment);
 	}
 
-	/**
+	/*
 	 * 接口支持三种格式参数：
 	 * 1、ip=10.10.79.214&port=11211&d=20120617
 	 * 2、triple=10.10.79.214_11211_20120617

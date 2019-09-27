@@ -25,7 +25,7 @@ public class GroupAction extends BaseAction  {
 	private IMemInstanceDirector memInstanceDirector;
 	
 	
-	/**
+	/*
 	 * @param appid 应用ID
 	 * @return	应用的Memcached集群
 	 * */

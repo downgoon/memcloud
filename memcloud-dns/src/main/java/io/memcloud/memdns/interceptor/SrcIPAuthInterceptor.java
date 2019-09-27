@@ -36,24 +36,24 @@ public class SrcIPAuthInterceptor extends BaseInterceptor implements API4Interna
 		}
 	}
 
-	/** 源IP是否认证通过*/
+	/* 源IP是否认证通过*/
 	protected boolean authPassed(String srcip) {
 		if(srcip==null) {
 			return false;
 		}
 		String scopelist = srciplist;
-		if("*".equals(scopelist)) {//只支持一个统配
+		if("*".equals(scopelist)) { // 只支持一个统配
 			return true;
 		}
 		scopelist = DynamicProperties.parseRefProperty(srciplist);
-		if(StringUtils.isEmpty(scopelist)) {//表示不允许任何源IP访问
+		if(StringUtils.isEmpty(scopelist)) { // 表示不允许任何源IP访问
 			return false;
 		}
-		if("*".equals(scopelist)) {//只支持一个统配
+		if("*".equals(scopelist)) { // 只支持一个统配
 			return true;
 		}
 		scopelist = (","+scopelist+",");
-		if(scopelist.indexOf(srcip+",") != -1) {//表示当前源IP在允许的范围内
+		if(scopelist.indexOf(srcip+",") != -1) { // 表示当前源IP在允许的范围内
 			return true;
 		}
 		return false;

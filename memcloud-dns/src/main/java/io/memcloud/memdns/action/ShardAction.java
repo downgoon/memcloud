@@ -15,8 +15,8 @@ import io.memcloud.memdns.dao.entry.AppMemGroup;
 import io.memcloud.stats.dao.IMemStatDao;
 import io.memcloud.stats.model.MemStatSummary;
 
-/**
- * 我的监控->全部实例（把所有应用的分片情况都列表出来）
+/*
+ * 我的监控=>全部实例（把所有应用的分片情况都列表出来）
  * */
 public class ShardAction extends BaseAction {
 
@@ -31,7 +31,7 @@ public class ShardAction extends BaseAction {
 	@Resource(name = "memStatDao")
 	private IMemStatDao memStatDao;
 	
-	/**
+	/*
 	 * 前提：登录
 	 * 我的监控->全部实例（把所有应用的分片情况都列表出来）
 	 * */

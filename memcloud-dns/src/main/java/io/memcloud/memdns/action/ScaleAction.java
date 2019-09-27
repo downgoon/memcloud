@@ -95,7 +95,7 @@ public class ScaleAction extends BaseAction {
 		return REST("create");
 	}
 
-	/**
+	/*
 	 * 当前登录用户申请过的扩容请求列表
 	 * */
 	@Override
@@ -106,7 +106,7 @@ public class ScaleAction extends BaseAction {
 		return REST("index");
 	}
 	
-	/** 管理员查批（展示待审列表） */
+	/* 管理员查批（展示待审列表） */
 	public String adminidx() {
 		short status = ScaleoutAppeal.STATUS_WAITING;
 		if ((ScaleoutAppeal.STATUS_PASSED+"").equals(getParam("status"))) {
@@ -119,7 +119,7 @@ public class ScaleAction extends BaseAction {
 		return REST("adminidx");
 	}
 	
-	/**
+	/*
 	 * 管理员审批某个具体的申请
 	 * @param	paramId   审核申请记录的ID
 	 * @param	action	可选，默认是空，表示查询。reject 表示驳回拒批； accept 表示通过审批，但是数量不一定跟用户申请的一样。

@@ -86,7 +86,7 @@ public class DNSAction extends BaseAction {
 		return REST("create");
 	}
 	
-	/**
+	/*
 	 * 提供给管理员判断某个应用的集群分配情况与DNS发布情况是否一致
 	 * @param	appid/paramId	应用ID
 	 * @return	0、[400,500) 输入参数错误；1、否则一定输出：memGroupSize,appConfSize和sync （对象信息：appDesc,appConf和memGroup）
