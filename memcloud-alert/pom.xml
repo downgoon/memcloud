@@ -15,10 +15,21 @@
 		<app.simple.name>memalert</app.simple.name>
 		<build.number>${maven.build.timestamp}</build.number>
 		<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+		<xmemcached.version>1.3.6</xmemcached.version>
 	</properties>
 
 	<dependencies>
 
+		<dependency>
+			<groupId>io.memcloud</groupId>
+			<artifactId>memcloud-data-mongodb</artifactId>
+			<version>0.2.0</version>
+		</dependency>
+		
+		<!-- 
+		https://github.com/downgoon/memcloud/issues/6
+		a better way is RPC/REST, not direct dao
+		 -->
 		<dependency>
 			<groupId>io.memcloud</groupId>
 			<artifactId>memcloud-data-dao</artifactId>
@@ -30,26 +41,29 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
+		
 		<dependency>
-			<groupId>io.memcloud</groupId>
-			<artifactId>memcloud-data-mongodb</artifactId>
-			<version>0.2.0</version>
+			<groupId>com.googlecode.xmemcached</groupId>
+			<artifactId>xmemcached</artifactId>
+			<version>${xmemcached.version}</version>
 			<exclusions>
 				<exclusion>
-					<artifactId>memcloud-data-model</artifactId>
-					<groupId>io.memcloud</groupId>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-
-		<dependency>
-			<groupId>io.memcloud</groupId>
-			<artifactId>memcloud-data-model</artifactId>
-			<version>0.2.0</version>
-		</dependency>
-
+		
+		
+		
 
 		<dependency>
 			<groupId>org.apache.commons</groupId>
