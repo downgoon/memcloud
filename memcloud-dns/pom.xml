@@ -21,49 +21,44 @@
 
 	<dependencies>
 
+		<!-- 
+		play as the mem-dns role which only depends on 'memcloud-data-dao' and MySQL  
+		-->
+		
+		<dependency>
+			<groupId>io.memcloud</groupId>
+			<artifactId>memcloud-data-dao</artifactId>
+			<version>0.2.0</version>
+		</dependency>
+		
+		
+		<!-- 
+		play as the mem-boss role which depends on
+		- [1] mem-dns: Memcached Pool and allocated mem-agent for Apps
+		- [2] mem-alert: Memcached Stats Data stored in MongoDB
+		- [3] mem-cas:  User Login
+		-->
+		
+		<!-- 
+		<dependency>
+			<groupId>io.memcloud</groupId>
+			<artifactId>memcloud-dns</artifactId>
+			<version>0.2.0</version>
+		</dependency>
+		 -->
+		
 		<dependency>
 			<groupId>io.memcloud</groupId>
 			<artifactId>memcloud-alert</artifactId>
 			<version>0.2.0</version>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>io.memcloud</groupId>
 			<artifactId>memcloud-cas</artifactId>
 			<version>0.2.0</version>
 		</dependency>
-
-		<dependency>
-			<groupId>io.memcloud</groupId>
-			<artifactId>memcloud-data-dao</artifactId>
-			<version>0.2.0</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>memcloud-data-model</artifactId>
-					<groupId>io.memcloud</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>io.memcloud</groupId>
-			<artifactId>memcloud-data-mongodb</artifactId>
-			<version>0.2.0</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>memcloud-data-model</artifactId>
-					<groupId>io.memcloud</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-
-		<dependency>
-			<groupId>io.memcloud</groupId>
-			<artifactId>memcloud-data-model</artifactId>
-			<version>0.2.0</version>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
