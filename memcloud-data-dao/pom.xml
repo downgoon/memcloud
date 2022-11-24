@@ -11,7 +11,7 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<hibernate.version>3.6.10.Final</hibernate.version>
+		<hibernate.version>5.3.20.Final</hibernate.version>
 		<c3p0.version>0.9.1.2</c3p0.version>
 	</properties>
 
